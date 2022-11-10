@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import {View, TextInput, Button, Text, FlatList, Modal, TouchableOpacity } from 'react-native';
 import { styles } from './styles';
+import { AddItem, TaskItem } from './components/index';
 
 
 export default function App() {
@@ -25,9 +26,7 @@ export default function App() {
   }
 
   const renderItem = ({item}) => (
-    <TouchableOpacity style={styles.listItemContainer} onPress={() => onHandleSelected(item)}>
-      <Text style={styles.listItem}>{item.value}</Text>
-    </TouchableOpacity>
+    <TaskItem item={item} onHandleSelected={onHandleSelected} />
   )
 
   const onHandleCancel = () => {
@@ -39,17 +38,11 @@ export default function App() {
     setModalVisible(!modalVisible);
   }
 
+  const onHandleChange = (text) => setTask(text);
+
   return (
     <View style={styles.container}>
-      <View style={styles.inputContainer}>
-        <TextInput 
-          style={styles.input} 
-          value={task} 
-          placeholder="Enter Task"
-          onChangeText={text => setTask(text)}
-        />
-        <Button disabled={!task} title='Add' color='#9A848F' onPress={onHandleTask} />
-      </View>
+      <AddItem  task={task} onHandleTask={onHandleTask} onHandleChange={onHandleChange} />
       <View style={styles.listContainer}>
       <Text style={styles.listTitle}>Todo List</Text>
       </View>
